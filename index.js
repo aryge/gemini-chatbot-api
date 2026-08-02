@@ -15,7 +15,7 @@ const PORT = process.env.PORT || 3000;
 
 // Inisialisasi Gemini AI Client menggunakan SDK terbaru @google/genai
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-const GEMINI_MODEL = 'gemini-2.5-flash';
+const GEMINI_MODEL = 'gemini-3-flash-preview';
 
 // Middleware
 app.use(cors());
