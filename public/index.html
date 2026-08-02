@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gemini AI Chatbot Playground</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Marked.js untuk render Markdown -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body class="bg-slate-50 font-sans h-screen flex flex-col">
+
+  <!-- Header -->
+  <header class="bg-white border-b border-slate-200 px-6 py-4 flex justify-between items-center shrink-0">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold text-xl shadow-md">G</div>
+      <div>
+        <h1 class="font-bold text-slate-800 text-lg leading-tight">Gemini AI Chatbot</h1>
+        <p class="text-xs text-green-500 font-medium flex items-center gap-1">
+          <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span> Online (Powered by Gemini 2.5 Flash)
+        </p>
+      </div>
+    </div>
+    <button id="clear-chat" class="px-4 py-2 text-xs font-semibold text-red-600 hover:text-white border border-red-200 hover:bg-red-500 rounded-lg transition">
+      Hapus Histori
+    </button>
+  </header>
+
+  <!-- Main Container -->
+  <main class="flex-1 flex overflow-hidden">
+    
+    <!-- Kolom Kiri: Konfigurasi Parameter (Sidebar) -->
+    <aside class="w-80 bg-white border-r border-slate-200 p-6 flex flex-col gap-6 overflow-y-auto hidden md:flex shrink-0">
+      <div>
+        <h2 class="font-bold text-slate-800 text-md mb-2">Preset Karakter Bot</h2>
+        <select id="preset-selector" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-700 focus:outline-indigo-500">
+          <option value="asisten">Asisten Umum Ramah</option>
+          <option value="finansial">Edukator Finansial</option>
+          <option value="travel">Travel Assistant</option>
+          <option value="coding">Coding Mentor</option>
+        </select>
+      </div>
+
+      <hr class="border-slate-100">
+
+      <!-- Konfigurasi Parameter Model -->
+      <div class="flex flex-col gap-4">
+        <h2 class="font-bold text-slate-800 text-md">Konfigurasi Gemini</h2>
+        
+        <!-- System Instruction -->
+        <div>
+          <label class="block text-xs font-bold text-slate-600 mb-1">System Instruction</label>
+          <textarea id="system-prompt" rows="4" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-700 focus:outline-indigo-500 resize-none">Kamu adalah asisten AI yang ramah, sopan, dan suka membantu pengguna.</textarea>
+        </div>
+
+        <!-- Temperature Slider -->
+        <div>
+          <div class="flex justify-between items-center mb-1">
+            <label class="text-xs font-bold text-slate-600">Temperature</label>
+            <span id="temp-val" class="text-xs font-bold text-indigo-600">0.7</span>
+          </div>
+          <input type="range" id="temperature" min="0" max="2" step="0.1" value="0.7" class="w-full accent-indigo-600">
+          <p class="text-[10px] text-slate-400 mt-1">Nilai lebih tinggi = jawaban lebih kreatif & acak; Nilai lebih rendah = lebih terarah.</p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Kolom Kanan: Tampilan Chat -->
+    <section class="flex-1 flex flex-col bg-slate-50 h-full overflow-hidden">
+      <!-- Area Pesan -->
+      <div id="chat-messages" class="flex-1 p-6 overflow-y-auto space-y-4">
+        <!-- Selamat datang -->
+        <div class="flex gap-3 max-w-3xl">
+          <div class="w-8 h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-sm shrink-0 shadow">AI</div>
+          <div class="bg-white border border-slate-200 rounded-2xl rounded-tl-none px-4 py-3 shadow-sm text-sm text-slate-700">
+            <p>Halo! Saya adalah chatbot dinamis yang ditenagai oleh <strong>Gemini 2.5 Flash</strong>. Bagaimana saya bisa membantu Anda hari ini? 😊</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Indikator Mengetik -->
+      <div id="typing-indicator" class="px-6 py-2 flex items-center gap-2 hidden">
+        <span class="text-xs text-slate-500 font-medium">Gemini sedang merespons</span>
+        <div class="flex gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-bounce" style="animation-delay: 0.1s"></span>
+          <span class="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-bounce" style="animation-delay: 0.2s"></span>
+          <span class="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-bounce" style="animation-delay: 0.3s"></span>
+        </div>
+      </div>
+
+      <!-- Area Input Pesan -->
+      <footer class="p-4 bg-white border-t border-slate-200">
+        <form id="chat-form" class="max-w-4xl mx-auto flex gap-3">
+          <input type="text" id="user-input" placeholder="Ketik pesan Anda di sini..." required autocomplete="off" class="flex-1 px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500 focus:bg-white transition">
+          <button type="submit" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm rounded-xl transition shadow-md shadow-indigo-100 flex items-center justify-center shrink-0">
+            Kirim
+          </button>
+        </form>
+      </footer>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
