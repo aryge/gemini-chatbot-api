@@ -16,13 +16,16 @@ Pastikan Anda sudah menginstal **Node.js (v18 ke atas)** di komputer Anda.
 
 ### 2. Instalasi Dependensi
 Ekstrak berkas ini, buka terminal pada folder proyek, lalu jalankan perintah:
-```bash
+bash
 npm install
-3. Konfigurasi Variabel Lingkungan
+
+### 3. Konfigurasi Variabel Lingkungan
 Duplikat file .env.example dan ubah namanya menjadi .env.
 Buka file .env tersebut lalu masukkan kunci API Gemini Anda di bagian:
-4. Menjalankan Aplikasi
+
+### 4. Menjalankan Aplikasi
 Mulai server backend lokal dengan menjalankan perintah:
 npm start
-5. Akses di Browser
+
+### 5. Akses di Browser
 Buka browser favorit Anda dan kunjungi tautan: 👉 http://localhost:3000
