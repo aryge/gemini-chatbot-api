@@ -3,13 +3,16 @@
   width: 6px;
   height: 6px;
 }
+
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
   background: #cbd5e1;
   border-radius: 4px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
 }
@@ -18,9 +21,11 @@
 .markdown-body p {
   margin-bottom: 0.75rem;
 }
+
 .markdown-body p:last-child {
   margin-bottom: 0;
 }
+
 .markdown-body code {
   background-color: #f1f5f9;
   padding: 0.125rem 0.25rem;
@@ -28,6 +33,7 @@
   font-size: 0.875em;
   font-family: monospace;
 }
+
 .markdown-body pre {
   background-color: #1e293b;
   color: #f8fafc;
@@ -37,6 +43,7 @@
   margin-bottom: 0.5rem;
   overflow-x: auto;
 }
+
 .markdown-body pre code {
   background-color: transparent;
   color: inherit;
@@ -44,6 +51,7 @@
   border-radius: 0;
   font-size: 0.85em;
 }
+
 .markdown-body ul, .markdown-body ol {
   margin-left: 1.25rem;
   margin-bottom: 0.75rem;

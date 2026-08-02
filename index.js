@@ -1,4 +1,3 @@
-
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
@@ -14,7 +13,15 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Inisialisasi Gemini AI Client menggunakan SDK terbaru @google/genai
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+const ai = new GoogleGenAI({
+  apiKey: process.env.GEMINI_API_KEY || '',
+  httpOptions: {
+    headers: {
+      'User-Agent': 'aistudio-build',
+    },
+  },
+});
+
 const GEMINI_MODEL = 'gemini-3.6-flash';
 
 // Middleware
@@ -35,7 +42,7 @@ app.post('/api/chat', async (req, res) => {
     // Ubah format pesan ke format yang kompatibel dengan Gemini SDK (role dan parts)
     const contents = conversation.map(({ role, text }) => ({
       role: role === 'bot' ? 'model' : 'user', // Gemini hanya menerima role 'user' atau 'model'
-      parts: [{ text: text }]
+      parts: [{ text: text }],
     }));
 
     // Panggil model Gemini AI menggunakan metode generateContent
@@ -44,8 +51,8 @@ app.post('/api/chat', async (req, res) => {
       contents: contents,
       config: {
         temperature: parseFloat(temperature) || 0.7,
-        systemInstruction: systemInstruction || "Jawab dengan ramah dan membantu."
-      }
+        systemInstruction: systemInstruction || 'Kamu adalah asisten AI yang ramah, sopan, dan suka membantu pengguna.',
+      },
     });
 
     // Kembalikan respons teks dari Gemini AI
@@ -56,7 +63,12 @@ app.post('/api/chat', async (req, res) => {
   }
 });
 
+// Fallback route untuk menyajikan index.html
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
 // Jalankan server pada port yang ditentukan
-app.listen(PORT, () => {
-  console.log(`Server ready on http://localhost:${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server ready on http://0.0.0.0:${PORT}`);
 });
